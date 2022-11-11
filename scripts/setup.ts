@@ -16,6 +16,9 @@ async function main () {
     console.log('Cannot find TIGRIS_URI environment variable ')
     process.exit(1)
   }
+
+  console.log(`Netlify CONTEXT - ${process.env.CONTEXT}`)
+  console.log(`Netlify git branch - ${process.env.BRANCH}`)
   // setup client
   const tigrisUri = process.env.TIGRIS_URI
   const clientConfig: TigrisClientConfig = { serverUrl: tigrisUri }
