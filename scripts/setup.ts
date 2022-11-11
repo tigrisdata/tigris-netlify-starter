@@ -18,7 +18,9 @@ async function main () {
   }
 
   console.log(`Netlify CONTEXT - ${process.env.CONTEXT}`)
-  console.log(`Netlify git branch - ${process.env.BRANCH}`)
+  console.log(`Netlify BRANCH - ${process.env.BRANCH}`)
+  console.log(`Netlify HEAD - ${process.env.HEAD}`)
+  console.log(`Netlify - ${process.env}`)
   // setup client
   const tigrisUri = process.env.TIGRIS_URI
   const clientConfig: TigrisClientConfig = { serverUrl: tigrisUri }
