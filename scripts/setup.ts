@@ -1,19 +1,21 @@
-import { Tigris } from '@tigrisdata/core'
-import { loadEnvConfig } from '@next/env'
-
-// Run the config loader only when not executing within next runtime
-if (process.env.NODE_ENV === undefined) {
-  if (process.env.APP_ENV === 'development') {
-    loadEnvConfig(process.cwd(), true)
-  } else if (process.env.APP_ENV === 'production') {
-    loadEnvConfig(process.cwd())
-  }
-}
+import { Tigris } from '@tigrisdata/core';
+import { TodoItem } from '../db/models/todoItems';
 
 async function main() {
-  // setup client and register schemas
-  const tigrisClient = new Tigris()
-  await tigrisClient.registerSchemas('models/tigris')
+  // setup client
+  const tigrisClient = new Tigris();
+  // ensure branch exists, create it if it needs to be created dynamically
+  await tigrisClient.getDatabase().initializeBranch();
+  // register schemas
+  await tigrisClient.registerSchemas([TodoItem]);
 }
 
 main()
+  .then(async () => {
+    console.log("Setup complete ...");
+    process.exit(0);
+  })
+  .catch(async (e) => {
+    console.error(e);
+    process.exit(1);
+  });
